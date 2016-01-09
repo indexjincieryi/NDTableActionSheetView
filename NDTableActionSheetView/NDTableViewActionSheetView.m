@@ -230,6 +230,8 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, CELL_HEIGHT *(self.showItemCount)) style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    _tableView.showsVerticalScrollIndicator = NO;
+    
     return _tableView;
 }
 
@@ -241,7 +243,7 @@
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.tableView.frame) - 1, SCREEN_WIDTH, CELL_HEIGHT + 1)];
     _bottomView.backgroundColor = [UIColor whiteColor];
     
-    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0.3)];
+    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0.5)];
     lineLabel.backgroundColor = [self colorWithHexString:@"#cccccc" alpha:1.f];
     [_bottomView addSubview:lineLabel];
     
@@ -271,12 +273,6 @@
 
 
 @end
-
-
-
-
-
-
 
 
 
