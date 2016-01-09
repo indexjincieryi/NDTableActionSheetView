@@ -30,7 +30,10 @@
 
 #pragma mark - life cycle
 
-- (instancetype)initWithFrame:(CGRect)frame itemArray:(NSArray *)itemArray showItemCount:(NSInteger) showItemCount bottomCellTitle:(NSString *)bottomTitle
+- (instancetype)initWithFrame:(CGRect)frame
+                    itemArray:(NSArray *)itemArray
+                showItemCount:(NSInteger) showItemCount
+              bottomCellTitle:(NSString *)bottomTitle
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -42,7 +45,10 @@
     return self;
 }
 
-+ (NDTableViewActionSheetView *)NDTableViewActionSheetViewWithFrame:(CGRect)frame itemArray:(NSArray *)itemArray showItemCount:(NSInteger) showItemCount bottomCellTitle:(NSString *)bottomTitle
++ (NDTableViewActionSheetView *)NDTableViewActionSheetViewWithFrame:(CGRect)frame
+                                                          itemArray:(NSArray *)itemArray
+                                                      showItemCount:(NSInteger) showItemCount
+                                                    bottomCellTitle:(NSString *)bottomTitle
 {
     return [[NDTableViewActionSheetView alloc] initWithFrame:frame itemArray:itemArray showItemCount:showItemCount bottomCellTitle:bottomTitle];
 }

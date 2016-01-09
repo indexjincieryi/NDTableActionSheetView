@@ -26,7 +26,10 @@
 
 - (IBAction)showTableViewActionSheetClick:(id)sender {
     
-    [[NDTableViewActionSheetView NDTableViewActionSheetViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) itemArray:@[@"dfdsf",@"sdfdsf",@"dsfdsf",@"dfdsf",@"sdfdsf",@"dsfdsf"] showItemCount:3 bottomCellTitle:@"Test"] show];
+    [[NDTableViewActionSheetView NDTableViewActionSheetViewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+                                                           itemArray:@[@"dfdsf",@"sdfdsf",@"dsfdsf",@"dfdsf",@"sdfdsf",@"dsfdsf"]
+                                                       showItemCount:3
+                                                     bottomCellTitle:@"Test"] show];
     
 }
 

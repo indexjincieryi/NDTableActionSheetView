@@ -20,8 +20,14 @@
  *
  *  @return NDTableViewActionSheetView
  */
-+ (NDTableViewActionSheetView *)NDTableViewActionSheetViewWithFrame:(CGRect)frame itemArray:(NSArray *)itemArray showItemCount:(NSInteger) showItemCount bottomCellTitle:(NSString *)bottomTitle;
++ (NDTableViewActionSheetView *)NDTableViewActionSheetViewWithFrame:(CGRect)frame
+                                                          itemArray:(NSArray *)itemArray
+                                                      showItemCount:(NSInteger) showItemCount
+                                                    bottomCellTitle:(NSString *)bottomTitle;
 
+/**
+ *  控件展示
+ */
 - (void)show;
 
 @end
