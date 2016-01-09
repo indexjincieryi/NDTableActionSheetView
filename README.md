@@ -48,4 +48,4 @@ JJNetworkDataModelKit is released under the MIT license. See
 
 # More Info
 
-Have a question? Please [open an issue](https://github.com/hamilyjing/JJNetworkDataModelKit/issues)!
+Have a question? Please [open an issue](https://github.com/indexjincieryi/NDTableActionSheetView/issues)!
