@@ -57,7 +57,7 @@
     
     [window addSubview:self];
     
-    [UIView animateWithDuration:.3 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
         self.maskBackgroundView.transform = CGAffineTransformMakeTranslation(0, -(CELL_HEIGHT * (self.showItemCount + 1)));
     }];
@@ -74,18 +74,57 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellId = @"cellID";
+    static NSString *cellId = @"CELLID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+            [cell setSeparatorInset:UIEdgeInsetsMake(0, 50, 0, 0)];
+        }
+        if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+            [cell setLayoutMargins:UIEdgeInsetsMake(0, 50, 0, 0)];
+        }
+        if([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]){
+            [cell setPreservesSuperviewLayoutMargins:NO];
+        }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        UIImageView *itemImageView = [[UIImageView alloc] initWithFrame:CGRectMake(14, 17, 25, 25)];
+        itemImageView.image = [UIImage imageNamed:@"baoone"];
+        itemImageView.backgroundColor = [UIColor grayColor];
+        [cell.contentView addSubview:itemImageView];
+        
+        
+        UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(itemImageView.frame) + 10, 12, 150, 16)];
+        firstLabel.text = @"Test1";
+        firstLabel.textAlignment = NSTextAlignmentLeft;
+        [cell.contentView addSubview:firstLabel];
+        
+        UILabel *secondLeftLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(firstLabel.frame), CGRectGetMaxY(firstLabel.frame) + 5, 65, 14)];
+        secondLeftLabel.text = @"标注：";
+        secondLeftLabel.textAlignment = NSTextAlignmentLeft;
+        [cell.contentView addSubview:secondLeftLabel];
+        
+        UILabel *secondRightLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(secondLeftLabel.frame), CGRectGetMinY(secondLeftLabel.frame), 150, 14)];
+        secondRightLabel.text = @"0989898";
+        secondRightLabel.textAlignment = NSTextAlignmentLeft;
+        [cell.contentView addSubview:secondRightLabel];
+        
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        UIImageView *accessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(14, 15, 25, 25)];
+        accessoryView.image = [UIImage imageNamed:@"baoone"];
+        accessoryView.backgroundColor = [UIColor grayColor];
+        cell.accessoryView = accessoryView;
+
     }
-    cell.textLabel.text = @"First";
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [self dismiss];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -97,9 +136,16 @@
 
 #pragma mark - event response
 
-- (void)dissmiss
+#pragma mark - private
+
+- (void)bottomViewTap
 {
-    [UIView animateWithDuration:.3 animations:^{
+    [self dismiss];
+}
+
+- (void)dismiss
+{
+    [UIView animateWithDuration:0.2 animations:^{
         [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
         self.maskBackgroundView.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {
@@ -107,7 +153,51 @@
     }];
 }
 
-#pragma mark - private
+- (UIColor *)colorWithHexString:(NSString *)color alpha:(CGFloat)alpha
+{
+    //删除字符串中的空格
+    NSString *cString = [[color stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+    // String should be 6 or 8 characters
+    if ([cString length] < 6)
+    {
+        return [UIColor clearColor];
+    }
+    // strip 0X if it appears
+    //如果是0x开头的，那么截取字符串，字符串从索引为2的位置开始，一直到末尾
+    if ([cString hasPrefix:@"0X"])
+    {
+        cString = [cString substringFromIndex:2];
+    }
+    //如果是#开头的，那么截取字符串，字符串从索引为1的位置开始，一直到末尾
+    if ([cString hasPrefix:@"#"])
+    {
+        cString = [cString substringFromIndex:1];
+    }
+    if ([cString length] != 6)
+    {
+        return [UIColor clearColor];
+    }
+    
+    // Separate into r, g, b substrings
+    NSRange range;
+    range.location = 0;
+    range.length = 2;
+    //r
+    NSString *rString = [cString substringWithRange:range];
+    //g
+    range.location = 2;
+    NSString *gString = [cString substringWithRange:range];
+    //b
+    range.location = 4;
+    NSString *bString = [cString substringWithRange:range];
+    
+    // Scan values
+    unsigned int r, g, b;
+    [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    return [UIColor colorWithRed:((float)r / 255.0f) green:((float)g / 255.0f) blue:((float)b / 255.0f) alpha:alpha];
+}
 
 #pragma mark - getter and setter
 
@@ -117,7 +207,7 @@
     }
     
     _maskBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT + CELL_HEIGHT * (self.showItemCount + 1))];
-    _maskBackgroundView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.1];
+    _maskBackgroundView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
     
     [_maskBackgroundView addSubview:self.maskView];
     [_maskBackgroundView addSubview:self.tableView];
@@ -134,7 +224,6 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, CELL_HEIGHT *(self.showItemCount)) style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     return _tableView;
 }
 
@@ -143,8 +232,21 @@
         return _bottomView;
     }
     
-    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.tableView.frame), SCREEN_WIDTH, CELL_HEIGHT)];
-    _bottomView.backgroundColor = [UIColor blackColor];
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.tableView.frame) - 1, SCREEN_WIDTH, CELL_HEIGHT + 1)];
+    _bottomView.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0.3)];
+    lineLabel.backgroundColor = [self colorWithHexString:@"#cccccc" alpha:1.f];
+    [_bottomView addSubview:lineLabel];
+    
+    UILabel *bottomTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, 22, SCREEN_WIDTH - 2 * 14, 16)];
+    bottomTitleLabel.text = @"bottombottombottombottom";
+    bottomTitleLabel.font = [UIFont systemFontOfSize:16];
+    [_bottomView addSubview:bottomTitleLabel];
+    
+    UITapGestureRecognizer *bottomViewTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bottomViewTap)];
+    [_bottomView addGestureRecognizer:bottomViewTap];
+    
     return _bottomView;
 }
 
@@ -155,7 +257,7 @@
     
     _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _maskView.backgroundColor = [UIColor clearColor];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dissmiss)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismiss)];
     [_maskView addGestureRecognizer:tap];
     
     return _maskView;
