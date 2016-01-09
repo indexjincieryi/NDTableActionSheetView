@@ -1,7 +1,7 @@
 # NDTableActionSheetView
 You can simply use a NDTableActionSheetView to completion
 
-## Usage
+# Usage
 
 * Use API
 
@@ -40,11 +40,6 @@ bottomCellTitle:@"Test"] show];
 
 @end
 ```
-
-# License
-
-JJNetworkDataModelKit is released under the MIT license. See
-[LICENSE](https://github.com/hamilyjing/JJNetworkDataModelKit/blob/master/LICENSE).
 
 # More Info
 
