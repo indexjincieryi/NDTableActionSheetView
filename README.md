@@ -41,6 +41,10 @@ bottomCellTitle:@"Test"] show];
 @end
 ```
 
+* 演示效果
+
+![image](https://github.com/indexjincieryi/NDTableActionSheetView/blob/master/animation.gif)
+
 # More Info
 
 Have a question? Please [open an issue](https://github.com/indexjincieryi/NDTableActionSheetView/issues)!
