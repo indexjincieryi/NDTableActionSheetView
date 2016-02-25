@@ -1,5 +1,5 @@
 # NDTableActionSheetView
-You can simply use a NDTableActionSheetView to completion
+You can simply use a NDTableActionSheetView to complete show
 
 # Usage
 
@@ -41,7 +41,7 @@ bottomCellTitle:@"Test"] show];
 @end
 ```
 
-* 演示效果
+* Demo show
 
 ![image](https://github.com/indexjincieryi/NDTableActionSheetView/blob/master/animation.gif)
 
