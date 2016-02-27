@@ -41,7 +41,7 @@ bottomCellTitle:@"Test"] show];
 @end
 ```
 
-* Demo show
+* Demo Show
 
 ![image](https://github.com/indexjincieryi/NDTableActionSheetView/blob/master/animation.gif)
 
